@@ -25,12 +25,12 @@ export default function ContactPage() {
           <a
             href={whatsAppContactUrl('Assalam o Alaikum! I have a question.')}
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noopener noreferrer"   
             className="group flex flex-col border border-gold/25 bg-panel p-8 transition-colors hover:border-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
           >
             <p className="eyebrow">WhatsApp</p>
             <p className="mt-3 font-serif text-2xl text-dark group-hover:text-gold-deep">
-              +92 349 2346003
+              +92 326 8954283
             </p>
             <p className="mt-2 font-sans text-sm text-ink-soft">
               Tap to chat — fastest way to order or ask a question.
