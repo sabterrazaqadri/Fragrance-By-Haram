@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000" role="img" aria-label="Fragrance bottle">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fbf8f1"/>
+      <stop offset="1" stop-color="#ece4d3"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e9dcc0"/>
+      <stop offset="0.5" stop-color="#d8c79f"/>
+      <stop offset="1" stop-color="#c9b585"/>
+    </linearGradient>
+    <linearGradient id="liquid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d4af52"/>
+      <stop offset="1" stop-color="#b89544"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="1000" fill="url(#bg)"/>
+  <ellipse cx="400" cy="860" rx="190" ry="26" fill="#1c1812" opacity="0.07"/>
+  <!-- cap -->
+  <rect x="352" y="180" width="96" height="84" rx="8" fill="#1c1812" opacity="0.85"/>
+  <rect x="368" y="160" width="64" height="30" rx="6" fill="#1c1812" opacity="0.6"/>
+  <!-- neck -->
+  <rect x="372" y="262" width="56" height="40" fill="url(#glass)"/>
+  <!-- body -->
+  <rect x="276" y="300" width="248" height="540" rx="26" fill="url(#glass)" stroke="#b89544" stroke-width="2" stroke-opacity="0.5"/>
+  <!-- liquid -->
+  <rect x="296" y="470" width="208" height="350" rx="16" fill="url(#liquid)" opacity="0.85"/>
+  <!-- highlight -->
+  <rect x="312" y="330" width="34" height="470" rx="17" fill="#fbf8f1" opacity="0.45"/>
+  <!-- label -->
+  <rect x="320" y="540" width="160" height="190" rx="6" fill="#fbf8f1" opacity="0.92"/>
+  <line x1="350" y1="600" x2="450" y2="600" stroke="#b89544" stroke-width="2"/>
+  <text x="400" y="588" text-anchor="middle" font-family="Georgia, serif" font-size="26" fill="#1c1812">Fragrances</text>
+  <text x="400" y="652" text-anchor="middle" font-family="Georgia, serif" font-size="22" fill="#5f574b" letter-spacing="3">BY HARAM</text>
+  <text x="400" y="700" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#8a8175" letter-spacing="4">EAU DE PARFUM</text>
+</svg>
