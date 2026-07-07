@@ -1,5 +1,11 @@
 import Link from 'next/link';
 import { Brandmark } from './Brandmark';
+import { SOCIAL_PROFILES } from '@/lib/site';
+
+const socialLinks = [
+  { label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61579877743435' },
+  { label: 'TikTok', href: 'https://www.tiktok.com/@fragrancebyharam' },
+].filter((s) => SOCIAL_PROFILES.includes(s.href));
 
 const shopLinks = [
   { label: 'All Fragrances', href: '/products' },
@@ -27,6 +33,23 @@ export function Footer() {
               Small-batch luxury Eau de Parfum, crafted in Pakistan. Long-lasting
               compositions made to be worn by the devoted.
             </p>
+            {socialLinks.length > 0 && (
+              <ul className="mt-6 flex flex-wrap gap-4">
+                {socialLinks.map((s) => (
+                  <li key={s.href}>
+                    <a
+                      href={s.href}
+                      target="_blank"
+                      rel="noopener noreferrer me"
+                      aria-label={`Fragrances by Haram on ${s.label}`}
+                      className="font-sans text-[11px] uppercase tracking-[0.18em] text-ivory/70 transition-colors hover:text-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+                    >
+                      {s.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
           {/* Shop */}

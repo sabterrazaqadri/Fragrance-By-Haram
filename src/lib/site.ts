@@ -30,10 +30,8 @@ export const GOOGLE_SITE_VERIFICATION =
 
 /** Public social / brand profiles for `sameAs` — improves entity/brand ranking. */
 export const SOCIAL_PROFILES: string[] = [
-  // Add real profile URLs as they go live, e.g.:
-  // 'https://www.instagram.com/fragrancesbyharam',
-  // 'https://www.facebook.com/fragrancesbyharam',
-  // 'https://www.tiktok.com/@fragrancesbyharam',
+  'https://www.facebook.com/profile.php?id=61579877743435',
+  'https://www.tiktok.com/@fragrancebyharam',
 ].filter(Boolean);
 
 /** High-value keywords the store should rank for. */
