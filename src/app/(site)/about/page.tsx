@@ -3,9 +3,17 @@ import { SectionHeading } from '@/components/SectionHeading';
 import { Button } from '@/components/Button';
 
 export const metadata: Metadata = {
-  title: 'The House',
+  title: 'The House — About Fragrances by Haram',
   description:
-    'Fragrances by Haram is a small-batch luxury perfume house crafted in Pakistan, built around longevity and character.',
+    'Fragrances by Haram is a small-batch luxury perfume house crafted in Pakistan, built around longevity and character. Learn the story behind the scents.',
+  alternates: { canonical: '/about' },
+  openGraph: {
+    title: 'The House · Fragrances by Haram',
+    description:
+      'A small-batch luxury perfume house crafted in Pakistan, built around longevity.',
+    url: '/about',
+    type: 'website',
+  },
 };
 
 const pillars = [

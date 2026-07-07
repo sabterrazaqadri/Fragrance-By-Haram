@@ -14,6 +14,7 @@ import { FragrancePyramid } from '@/components/FragrancePyramid';
 import { RelatedProducts } from '@/components/RelatedProducts';
 import { Rating } from '@/components/Rating';
 import { TruckIcon, ShieldIcon, ExchangeIcon } from '@/components/icons';
+import { SITE_URL, SITE_NAME, absoluteUrl } from '@/lib/site';
 
 export const revalidate = 60;
 
@@ -32,18 +33,31 @@ export async function generateMetadata({
 
   const img = primaryImage(product);
   const price = currentPrice(product);
+  const canonical = `/products/${product.slug}`;
+  const title = `${product.name} — ${product.family ?? 'Eau de Parfum'}`;
   const description =
     product.description ||
-    `${product.name} — ${product.family ?? 'luxury Eau de Parfum'} by Fragrances by Haram. PKR ${price.toLocaleString('en-PK')}.`;
+    `${product.name} — ${product.family ?? 'luxury Eau de Parfum'} by Fragrances by Haram. Long-lasting, small-batch, PKR ${price.toLocaleString('en-PK')}. Free delivery & Cash on Delivery across Pakistan.`;
+  const ogImage = img?.url
+    ? [{ url: img.url, alt: img.alt || product.name, width: img.width ?? 800, height: img.height ?? 1000 }]
+    : undefined;
 
   return {
-    title: product.name,
+    title,
     description,
+    alternates: { canonical },
     openGraph: {
       title: `${product.name} · Fragrances by Haram`,
       description,
       type: 'website',
-      images: img?.url ? [{ url: img.url, alt: img.alt || product.name }] : [],
+      url: canonical,
+      ...(ogImage ? { images: ogImage } : {}),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${product.name} · Fragrances by Haram`,
+      description,
+      ...(img?.url ? { images: [img.url] } : {}),
     },
   };
 }
@@ -57,35 +71,117 @@ const trust = [
 function ProductJsonLd({ product }: { product: Product }) {
   const img = primaryImage(product);
   const price = currentPrice(product);
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || '';
-  const data = {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: product.name,
-    description: product.description ?? undefined,
-    image: img?.url ? [img.url] : undefined,
-    brand: { '@type': 'Brand', name: 'Fragrances by Haram' },
-    category: product.family ?? undefined,
-    aggregateRating:
-      product.reviewCount > 0
+  const productUrl = absoluteUrl(`/products/${product.slug}`);
+  const imageUrl = img?.url
+    ? img.url.startsWith('http')
+      ? img.url
+      : absoluteUrl(img.url)
+    : undefined;
+
+  // priceValidUntil ~ 1 year out (Google recommends a future date for offers).
+  const validUntil = new Date();
+  validUntil.setFullYear(validUntil.getFullYear() + 1);
+
+  const graph = [
+    {
+      '@type': 'Product',
+      '@id': `${productUrl}#product`,
+      name: product.name,
+      description: product.description ?? undefined,
+      image: imageUrl ? [imageUrl] : undefined,
+      sku: product.slug,
+      mpn: product.slug,
+      category: product.family ?? 'Eau de Parfum',
+      brand: { '@type': 'Brand', name: SITE_NAME },
+      ...(product.reviewCount > 0
         ? {
-            '@type': 'AggregateRating',
-            ratingValue: product.rating,
-            reviewCount: product.reviewCount,
+            aggregateRating: {
+              '@type': 'AggregateRating',
+              ratingValue: product.rating,
+              reviewCount: product.reviewCount,
+              bestRating: 5,
+              worstRating: 1,
+            },
           }
-        : undefined,
-    offers: {
-      '@type': 'Offer',
-      priceCurrency: 'PKR',
-      price: price,
-      availability: 'https://schema.org/InStock',
-      url: `${siteUrl}/products/${product.slug}`,
+        : {}),
+      offers: {
+        '@type': 'Offer',
+        priceCurrency: 'PKR',
+        price: String(price),
+        priceValidUntil: validUntil.toISOString().slice(0, 10),
+        availability: 'https://schema.org/InStock',
+        itemCondition: 'https://schema.org/NewCondition',
+        url: productUrl,
+        seller: { '@id': `${SITE_URL}/#organization` },
+        shippingDetails: {
+          '@type': 'OfferShippingDetails',
+          shippingRate: {
+            '@type': 'MonetaryAmount',
+            value: '0',
+            currency: 'PKR',
+          },
+          shippingDestination: {
+            '@type': 'DefinedRegion',
+            addressCountry: 'PK',
+          },
+          deliveryTime: {
+            '@type': 'ShippingDeliveryTime',
+            handlingTime: {
+              '@type': 'QuantitativeValue',
+              minValue: 0,
+              maxValue: 1,
+              unitCode: 'DAY',
+            },
+            transitTime: {
+              '@type': 'QuantitativeValue',
+              minValue: 1,
+              maxValue: 4,
+              unitCode: 'DAY',
+            },
+          },
+        },
+        hasMerchantReturnPolicy: {
+          '@type': 'MerchantReturnPolicy',
+          applicableCountry: 'PK',
+          returnPolicyCategory:
+            'https://schema.org/MerchantReturnFiniteReturnWindow',
+          merchantReturnDays: 7,
+          returnMethod: 'https://schema.org/ReturnByMail',
+          returnFees: 'https://schema.org/FreeReturn',
+        },
+      },
     },
-  };
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Home',
+          item: SITE_URL,
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'Collection',
+          item: absoluteUrl('/products'),
+        },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          name: product.name,
+          item: productUrl,
+        },
+      ],
+    },
+  ];
+
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }),
+      }}
     />
   );
 }

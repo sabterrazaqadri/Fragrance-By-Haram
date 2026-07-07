@@ -3,9 +3,17 @@ import { SectionHeading } from '@/components/SectionHeading';
 import { whatsAppContactUrl } from '@/lib/whatsapp';
 
 export const metadata: Metadata = {
-  title: 'Contact',
+  title: 'Contact — Order on WhatsApp',
   description:
-    'Get in touch with Fragrances by Haram on WhatsApp or by email. Cash on Delivery available nationwide.',
+    'Get in touch with Fragrances by Haram on WhatsApp or by email. Order with Cash on Delivery available nationwide across Pakistan.',
+  alternates: { canonical: '/contact' },
+  openGraph: {
+    title: 'Contact · Fragrances by Haram',
+    description:
+      'Message us on WhatsApp to order — Cash on Delivery across Pakistan.',
+    url: '/contact',
+    type: 'website',
+  },
 };
 
 const email = 'hello@fragrancesbyharam.com';

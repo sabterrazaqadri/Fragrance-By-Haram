@@ -1,8 +1,9 @@
 import type { Product } from './types';
 import { currentPrice } from './types';
 
-const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '923492346003';
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || '';
+const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '923268954283';
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || 'https://fragrancesbyharam.store';
 
 export interface BuyNowParams {
   product: Pick<Product, 'name' | 'slug' | 'pricing'>;
