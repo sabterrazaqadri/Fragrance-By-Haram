@@ -18,7 +18,6 @@ const houseLinks = [
   { label: 'The House', href: '/about' },
   { label: 'Contact', href: '/contact' },
   { label: 'Fragrance Notes', href: '/products/shaikh-e-haram#pyramid' },
-  { label: 'Studio', href: '/studio' },
 ];
 
 export function Footer() {
